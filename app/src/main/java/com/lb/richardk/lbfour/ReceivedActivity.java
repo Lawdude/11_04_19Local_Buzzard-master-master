@@ -1,11 +1,15 @@
 package com.lb.richardk.lbfour;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -61,13 +65,18 @@ public class ReceivedActivity extends AppCompatActivity {
                 viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String reg = null;
-                        String sub = null;
-                        String uid = null;
 
-                        Alert alert = new Alert(reg, sub, uid);
+                        myRef.child(alertId).setValue(null);
+                    }
+                });
 
-                        myRef.child(alertId).setValue(alert);
+                viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent startIntent = new Intent(getApplicationContext(), RateAlertActivity.class);
+                        startIntent.putExtra("alertID", alertId);
+                        startActivity(startIntent);
                     }
                 });
             }
@@ -80,13 +89,14 @@ public class ReceivedActivity extends AppCompatActivity {
     {
         View mView;
         Button deleteBtn;
+        LinearLayout parentLayout;
 
         public AlertViewHolder(View itemView)
         {
             super(itemView);
             mView=itemView;
-            deleteBtn = (Button)mView.findViewById(R.id.delete);
-
+            deleteBtn = mView.findViewById(R.id.delete);
+            parentLayout = mView.findViewById(R.id.parent_layout);
         }
 
         public void setReg(String reg)

@@ -7,21 +7,21 @@ public class Car
 {
     public String vehicleReg;
     public String model;
-    public String colour;
+    //public String colour;
     public String make;
-    public String borough;
+    //public String borough;
 
     public Car()
     {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Car(String vReg, String mod, String col, String mk, String bor)
+    public Car(String vReg, String mod, String mk)
     {
         this.vehicleReg = vReg;
         this.model = mod;
-        this.colour = col;
+        //this.colour = col;
         this.make = mk;
-        this.borough = bor;
+        //this.borough = bor;
     }
 }

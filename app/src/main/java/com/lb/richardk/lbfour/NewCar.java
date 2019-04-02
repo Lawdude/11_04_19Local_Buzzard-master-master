@@ -8,20 +8,20 @@ public class NewCar
     public String vehicleReg;
     public String model;
     public String make;
-    public String colour;
-    public String borough;
+    //public String colour;
+    //public String borough;
 
     public NewCar()
     {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public NewCar(String vReg, String mod, String col, String mk, String bor)
+    public NewCar(String vReg, String mod, String mk)
     {
         this.vehicleReg = vReg;
         this.model = mod;
-        this.colour = col;
+        //this.colour = col;
         this.make = mk;
-        this.borough = bor;
+        //this.borough = bor;
     }
 }

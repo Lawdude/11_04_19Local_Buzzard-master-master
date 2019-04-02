@@ -61,13 +61,8 @@ public class SentReceivedActivity extends AppCompatActivity {
                 viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String vReg = null;
-                        String sub = null;
-                        String uid = null;
 
-                        Alert alert = new Alert(vReg, sub, uid);
-
-                        myRef.child(alertId).setValue(alert);
+                        myRef.child(alertId).setValue(null);
                     }
                 });
             }

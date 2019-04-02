@@ -9,18 +9,20 @@ public class Alert
     // public String message;
     public String subject;
     public String uid;
+    public int vote;
 
     public Alert()
     {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Alert(String vReg, String sub, String uid)
+    public Alert(String vReg, String sub, String uid, int vote)
     {
         this.vehicleReg = vReg;
         // this.message = mess;
         this.subject = sub;
         this.uid = uid;
+        this.vote = vote;
     }
 
     public String getReg()

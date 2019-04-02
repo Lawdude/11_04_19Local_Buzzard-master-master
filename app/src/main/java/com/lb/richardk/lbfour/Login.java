@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,8 +27,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText EmaileditText;
     private EditText PasswordeditText;
     private Button Loginbtn;
-    private Button Registernowbutton;
-    private TextView ForgotPassword;
     private TextView error;
 
     private DatabaseReference UserRef;
@@ -41,27 +40,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance();
         UserRef = FirebaseDatabase.getInstance().getReference().child("User");
-
-
-
-
-//        final TextView ForgotPassword = (TextView) findViewById(R.id.ForgotPdtextView);
-//        ForgotPassword.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent startIntent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
-//                startActivity(startIntent);
-//            }
-//        });
-//
-//        final TextView hometv = (TextView) findViewById(R.id.HometextView);
-//        hometv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
-//                startActivity(startIntent);
-//            }
-//        });
 
         Button registernow = (Button)findViewById(R.id.RegisterNowbtn);
         registernow.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +69,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         Loginbtn.setOnClickListener(this);
 
+        if (mAuth.getCurrentUser() != null)
+        {
+            Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(startIntent);
+        }
 
-    }
+
+
+
+        }
     @Override
     public void onClick(View v)
     {

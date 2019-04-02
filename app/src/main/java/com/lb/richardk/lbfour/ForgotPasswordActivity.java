@@ -26,33 +26,34 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        email = (EditText) findViewById(R.id.EmailNumbereditText2);
-
-        Button updatePass = (Button)findViewById(R.id.SendCodebutton);
-        updatePass.setOnClickListener(new View.OnClickListener()
+        Button sendEmail = (Button) findViewById(R.id.SendCodebutton);
+        sendEmail.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                String emailAddress = email.getText().toString();
+            public void onClick(View v) {
+                email = (EditText) findViewById(R.id.EmailNumbereditText2);
 
-                auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>()
-                {
+                Button updatePass = (Button) findViewById(R.id.SendCodebutton);
+                updatePass.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            Log.d("Success", "Email sent.");
-                        }
+                    public void onClick(View v) {
+                        String emailAddress = email.getText().toString();
+
+                        auth.sendPasswordResetEmail(emailAddress)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d("Success", "Email sent.");
+                                        }
+                                    }
+                                });
                     }
                 });
+
+                Intent startIntent = new Intent(getApplicationContext(), Login.class);
+                startActivity(startIntent);
             }
         });
-
-        Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(startIntent);
-        
     }
 }

@@ -25,8 +25,8 @@ public class VehicleActivity extends AppCompatActivity {
     public EditText vRegistration;
     public EditText model;
     public EditText make;
-    public EditText colour;
-    public EditText borough;
+    //public EditText colour;
+    //public EditText borough;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class VehicleActivity extends AppCompatActivity {
         vRegistration = (EditText) findViewById(R.id.ViewVehicleRegeditText);
         make = (EditText) findViewById(R.id.ViewMakeeditText);
         model = (EditText) findViewById(R.id.ViewModeleditText2);
-        colour = (EditText) findViewById(R.id.ViewColoureditText2);
-        borough = (EditText) findViewById(R.id.ViewBorough);
+        //colour = (EditText) findViewById(R.id.ViewColoureditText2);
+        //borough = (EditText) findViewById(R.id.ViewBorough);
 
         vRegistration.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,14 +82,14 @@ public class VehicleActivity extends AppCompatActivity {
                 {
                     model.setError("Model is required");
                 }
-                else if (TextUtils.isEmpty(colour.getText()))
-                {
-                    colour.setError("Colour is required");
-                }
-                else if (TextUtils.isEmpty(borough.getText()))
-                {
-                    borough.setError("Borough is required");
-                }
+//                else if (TextUtils.isEmpty(colour.getText()))
+//                {
+//                    colour.setError("Colour is required");
+//                }
+//                else if (TextUtils.isEmpty(borough.getText()))
+//                {
+//                    borough.setError("Borough is required");
+//                }
                 else
                 {
                     Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -98,18 +98,28 @@ public class VehicleActivity extends AppCompatActivity {
                     String reg = vRegistration.getText().toString();
                     String mod = model.getText().toString();
                     String mk = make.getText().toString();
-                    String col = colour.getText().toString();
-                    String bor = borough.getText().toString();
+                    //String col = colour.getText().toString();
+                    //String bor = borough.getText().toString();
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     String uid = user.getUid();
 
-                    NewCar newCar = new NewCar(reg, mod, col, mk, bor);
+                    NewCar newCar = new NewCar(reg, mod, mk);
 
                     myRef.child(uid).push().setValue(newCar);
                     myRegRef.child(reg).child("uid").setValue(uid);
                 }
+            }
+        });
+
+        Button skip = (Button) findViewById(R.id.skipButton);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(startIntent);
             }
         });
     }

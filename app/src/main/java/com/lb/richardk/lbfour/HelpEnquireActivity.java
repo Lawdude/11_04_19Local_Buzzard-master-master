@@ -68,7 +68,7 @@ public void send_click(View v)
         Enquiry enquiry = new Enquiry(em, sub, mess);
         myRef.child(uid).push().setValue(enquiry);
 
-        Intent startIntent = new Intent(getApplicationContext(), ContactUsActivity.class);
+        Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(startIntent);
     }
 }

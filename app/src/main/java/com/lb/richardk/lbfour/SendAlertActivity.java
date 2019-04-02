@@ -83,12 +83,13 @@ public class SendAlertActivity extends AppCompatActivity {
             String vReg = aRegistration.getText().toString();
             // String mess = aMessage.getText().toString();
             String sub = subject.getSelectedItem().toString();
+            int vote = 0;
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             String uid = user.getUid();
 
-            final Alert alert = new Alert(vReg, sub, uid);
+            final Alert alert = new Alert(vReg, sub, uid, vote);
 
             myRef = FirebaseDatabase.getInstance().getReference().child("Registration").child(vReg);
 
