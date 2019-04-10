@@ -26,12 +26,13 @@ public class SendAlertActivity extends AppCompatActivity {
     DatabaseReference messRef = database.getReference("Alert");
     DatabaseReference myMessRef = database.getReference("Message");
 
-    public DatabaseReference myRef;
+    public DatabaseReference myRef, voteRef;
 
     private EditText aRegistration, aMessage;
     private Spinner subject;
 
     public String value;
+    public String uid;
 
 
     @Override
@@ -48,6 +49,8 @@ public class SendAlertActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Subject));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);
+
+        voteRef = FirebaseDatabase.getInstance().getReference().child("Votes");
 
         aRegistration.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,7 +90,7 @@ public class SendAlertActivity extends AppCompatActivity {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            String uid = user.getUid();
+            uid = user.getUid();
 
             final Alert alert = new Alert(vReg, sub, uid, vote);
 
@@ -99,11 +102,25 @@ public class SendAlertActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        value = ds.getValue(String.class);
-//                      value = dataSnapshot.getValue(String.class);
-                        Log.d("success", "Value is: " + value);
-                        messRef.child(value).push().setValue(alert);
+                    if(dataSnapshot.getChildrenCount() > 0) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            value = ds.getValue(String.class);
+                            Log.d("success", "Value is: " + value);
+
+//                          value = dataSnapshot.getValue(String.class);
+                            Log.d("success", "Value is: " + value);
+                            String key = messRef.child(value).push().getKey();
+                            messRef.child(value).child(key).setValue(alert);
+                            voteRef.child(value).child(key).child("vote").setValue(0);
+                            myMessRef.child(uid).push().setValue(alert);
+
+                            Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(startIntent);
+                        }
+                    }
+                    else
+                    {
+                        aRegistration.setError("The registration entered is not registered");
                     }
                 }
                 @Override
@@ -112,12 +129,6 @@ public class SendAlertActivity extends AppCompatActivity {
                     Log.w("fail", "Failed to read value.", error.toException());
                 }
             });
-
-            myMessRef.child(uid).push().setValue(alert);
-
-            Intent startIntent = new Intent (getApplicationContext(), HomeActivity.class);
-            //show how to pass information to another activity
-            startActivity(startIntent);
             }
         });
     }

@@ -84,11 +84,11 @@ public class VehicleViewActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String vReg = null;
                         String mod = null;
-                        //String col = null;
+                        String col = null;
                         String mk = null;
-                        //String bor = null;
+                        String bor = null;
 
-                        Car car = new Car(vReg, mod, mk);
+                        Car car = new Car(vReg, mod, col, mk, bor);
 
                         myRef.child(carId).setValue(car);
                         carRef.child(carReg).setValue(null);

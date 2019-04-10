@@ -26,7 +26,7 @@
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.476" />
 
     <EditText
         android:id="@+id/vehicleRegeditText4"
@@ -35,16 +35,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="212dp"
+        android:layout_marginBottom="320dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="Model"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ViewModeleditText2"
-        app:layout_constraintVertical_bias="0.54" />
+        app:layout_constraintTop_toBottomOf="@+id/ViewMakeeditText"
+        app:layout_constraintVertical_bias="0.98" />
 
     <EditText
         android:id="@+id/ViewModeleditText2"
@@ -60,11 +61,44 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ViewMakeeditText"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.083" />
 
+
+    <EditText
+        android:id="@+id/ViewColoureditText2"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="230dp"
+        android:background="@android:drawable/editbox_background"
+        android:ems="10"
+        android:hint="Colour"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ViewMakeeditText"
+        app:layout_constraintVertical_bias="0.354" />
+
+    <EditText
+        android:id="@+id/BorougheditText"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="256dp"
+        android:background="@android:drawable/editbox_background"
+        android:ems="10"
+        android:hint="Borough"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/AddVehiclebutton"

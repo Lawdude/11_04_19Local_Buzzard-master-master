@@ -33,9 +33,9 @@ public class AddVehicleActivity extends AppCompatActivity {
 
     public EditText registration;
     public EditText model;
-    //public EditText colour;
+    public EditText colour;
     public EditText make;
-    //public EditText borough;
+    public EditText borough;
 
 
 
@@ -46,9 +46,9 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         registration = (EditText) findViewById(R.id.ViewMakeeditText);
         model = (EditText) findViewById(R.id.ViewModeleditText2);
-        //colour = (EditText) findViewById(R.id.ViewColoureditText2);
+        colour = (EditText) findViewById(R.id.ViewColoureditText2);
         make = (EditText) findViewById(R.id.ViewMakeeditText);
-        //borough = (EditText) findViewById(R.id.BorougheditText);
+        borough = (EditText) findViewById(R.id.BorougheditText);
 
         registration.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,15 +82,15 @@ public class AddVehicleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String vReg = registration.getText().toString();
                 String mod = model.getText().toString();
-                //String col = colour.getText().toString();
+                String col = colour.getText().toString();
                 String mk = make.getText().toString();
-                //String bor = borough.getText().toString();
+                String bor = borough.getText().toString();
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 String uid = user.getUid();
 
-                Car car = new Car(vReg, mod, mk);
+                Car car = new Car(vReg, mod, col, mk, bor);
 
                 myRef.child(uid).push().setValue(car);
                 myRegRef.child(vReg).child("uid").setValue(uid);
