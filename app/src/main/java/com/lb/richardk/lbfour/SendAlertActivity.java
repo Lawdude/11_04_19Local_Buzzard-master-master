@@ -1,6 +1,7 @@
 package com.lb.richardk.lbfour;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +32,7 @@ public class SendAlertActivity extends AppCompatActivity {
 
     private EditText aRegistration, aMessage;
     private Spinner subject;
+    private TextView error;
 
     public String value;
     public String uid;
@@ -42,6 +45,8 @@ public class SendAlertActivity extends AppCompatActivity {
 
         aRegistration = (EditText) findViewById(R.id.ViewMakeeditText);
         subject = (Spinner) findViewById(R.id.Subjectspinner2);
+
+        error = (TextView)findViewById(R.id.errorText2);
 
         Spinner mySpinner = (Spinner) findViewById(R.id.Subjectspinner2);
 
@@ -96,39 +101,47 @@ public class SendAlertActivity extends AppCompatActivity {
 
             myRef = FirebaseDatabase.getInstance().getReference().child("Registration").child(vReg);
 
-                // Read from the database
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    if(dataSnapshot.getChildrenCount() > 0) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            value = ds.getValue(String.class);
-                            Log.d("success", "Value is: " + value);
+                if (sub.equals("Select Subject"))
+                {
+                    error.setTextColor(Color.RED);
+                    error.setText("Please enter a subject");
+                }
+                else
+                {
+                    // Read from the database
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            if(dataSnapshot.getChildrenCount() > 0) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    value = ds.getValue(String.class);
+                                    Log.d("success", "Value is: " + value);
 
-//                          value = dataSnapshot.getValue(String.class);
-                            Log.d("success", "Value is: " + value);
-                            String key = messRef.child(value).push().getKey();
-                            messRef.child(value).child(key).setValue(alert);
-                            voteRef.child(value).child(key).child("vote").setValue(0);
-                            myMessRef.child(uid).push().setValue(alert);
+                                    //                          value = dataSnapshot.getValue(String.class);
+                                    Log.d("success", "Value is: " + value);
+                                    String key = messRef.child(value).push().getKey();
+                                    messRef.child(value).child(key).setValue(alert);
+                                    voteRef.child(value).child(key).child("vote").setValue(0);
+                                    myMessRef.child(uid).push().setValue(alert);
 
-                            Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(startIntent);
+                                    Intent startIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                                    startActivity(startIntent);
+                                }
+                            }
+                            else
+                            {
+                                aRegistration.setError("The registration entered is not registered");
+                            }
                         }
-                    }
-                    else
-                    {
-                        aRegistration.setError("The registration entered is not registered");
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.w("fail", "Failed to read value.", error.toException());
+                        }
+                    });
                 }
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w("fail", "Failed to read value.", error.toException());
-                }
-            });
             }
         });
     }

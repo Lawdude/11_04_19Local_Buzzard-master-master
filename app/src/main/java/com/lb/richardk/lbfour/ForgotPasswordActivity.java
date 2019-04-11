@@ -18,42 +18,32 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public EditText email;
-
-
+    private Button updatePass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        Button sendEmail = (Button) findViewById(R.id.SendCodebutton);
-        sendEmail.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                email = (EditText) findViewById(R.id.EmailNumbereditText2);
+        email = (EditText) findViewById(R.id.EmailNumbereditText2);
+        updatePass = (Button) findViewById(R.id.SendCodebutton);
 
-                Button updatePass = (Button) findViewById(R.id.SendCodebutton);
-                updatePass.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String emailAddress = email.getText().toString();
+            updatePass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String emailAddress = email.getText().toString();
 
-                        auth.sendPasswordResetEmail(emailAddress)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d("Success", "Email sent.");
-                                        }
+                    auth.sendPasswordResetEmail(emailAddress)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Intent startIntent = new Intent(getApplicationContext(), Login.class);
+                                        startActivity(startIntent);
                                     }
-                                });
-                    }
-                });
-
-                Intent startIntent = new Intent(getApplicationContext(), Login.class);
-                startActivity(startIntent);
-            }
-        });
-    }
+                                }
+                            });
+                }
+            });
+        }
 }
